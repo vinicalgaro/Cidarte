@@ -13,6 +13,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.InetSocketAddress
+import java.net.Proxy
+import java.net.ProxySelector
 import javax.inject.Singleton
 
 @Module
@@ -46,6 +49,7 @@ object AppModule {
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(apiKeyInterceptor)
+            .proxySelector(ProxySelector.getDefault())
             .build()
     }
 

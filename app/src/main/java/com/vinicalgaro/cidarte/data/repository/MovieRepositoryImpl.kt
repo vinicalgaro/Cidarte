@@ -7,6 +7,7 @@ import com.vinicalgaro.cidarte.data.remote.mapper.toDomain
 import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 
 class MovieRepositoryImpl(
@@ -25,11 +26,9 @@ class MovieRepositoryImpl(
     private fun getMoviesFromApi(
         apiCall: suspend () -> TmdbListResponse<MovieDto>
     ): Flow<List<Movie>> = flow {
-        try {
-            val movies = apiCall().results.map { it.toDomain() }
-            emit(movies)
-        } catch (_: Exception) {
-            emit(emptyList())
-        }
+        val movies = apiCall().results.map { it.toDomain() }
+        emit(movies)
+    }.catch { exception ->
+        emit(emptyList())
     }
 }
