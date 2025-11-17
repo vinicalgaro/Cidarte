@@ -10,6 +10,9 @@ import androidx.compose.ui.text.googlefonts.GoogleFont
 import androidx.compose.ui.unit.sp
 import com.vinicalgaro.cidarte.R
 
+private const val fontNameRoboto: String = "Roboto"
+private const val fontNameBebasNeue: String = "Bebas Neue"
+
 @OptIn(ExperimentalTextApi::class)
 val provider = GoogleFont.Provider(
     providerAuthority = "com.google.android.gms.fonts",
@@ -20,7 +23,7 @@ val provider = GoogleFont.Provider(
 @OptIn(ExperimentalTextApi::class)
 val BebasNeue = FontFamily(
     Font(
-        googleFont = GoogleFont("Bebas Neue"),
+        googleFont = GoogleFont(fontNameBebasNeue),
         fontProvider = provider,
         weight = FontWeight.Normal
     )
@@ -29,12 +32,12 @@ val BebasNeue = FontFamily(
 @OptIn(ExperimentalTextApi::class)
 val Roboto = FontFamily(
     Font(
-        googleFont = GoogleFont("Roboto"),
+        googleFont = GoogleFont(fontNameRoboto),
         fontProvider = provider,
         weight = FontWeight.Normal
     ),
     Font(
-        googleFont = GoogleFont("Roboto"),
+        googleFont = GoogleFont(fontNameRoboto),
         fontProvider = provider,
         weight = FontWeight.Medium
     )
