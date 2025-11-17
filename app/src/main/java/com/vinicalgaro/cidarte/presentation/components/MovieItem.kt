@@ -2,7 +2,6 @@ package com.vinicalgaro.cidarte.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,19 +41,17 @@ fun MovieItem(movie: Movie) {
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
-            Row {
-                Text(
-                    text = "${movie.releaseYear} - ${
-                        String.format(
-                            Locale.getDefault(),
-                            "%.1f",
-                            movie.voteAverage
-                        )
-                    }",
-                    fontSize = 12.sp,
-                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-                )
-            }
+            Text(
+                text = "${movie.releaseYear} - ${
+                    String.format(
+                        Locale.getDefault(),
+                        "%.1f",
+                        movie.voteAverage
+                    )
+                }",
+                fontSize = 12.sp,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
         }
     }
 }
