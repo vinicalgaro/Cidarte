@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,63 +32,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.vinicalgaro.cidarte.domain.model.Movie
+import java.util.Locale
 
-// 1. Esta é a "tela" principal. Ela gerencia o estado.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel() // Pega o ViewModel via Hilt
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    // 2. Coleta o StateFlow e se redesenha automaticamente quando ele muda
     val uiState by viewModel.uiState.collectAsState()
+    when {
+        uiState.isLoading -> {
+            CircularProgressIndicator()
+        }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Cidarte") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = Color.White
-                )
+        uiState.error != null -> {
+            Text(
+                text = "Erro ao carregar: ${uiState.error}",
+                color = Color.Red,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(16.dp)
             )
         }
-    ) { paddingValues ->
-        // 3. Lógica para exibir o conteúdo certo (Loading, Erro ou Sucesso)
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues), // Importante aplicar o padding do Scaffold
-            contentAlignment = Alignment.Center
-        ) {
-            when {
-                uiState.isLoading -> {
-                    CircularProgressIndicator()
-                }
 
-                uiState.error != null -> {
-                    Text(
-                        text = "Erro ao carregar: ${uiState.error}",
-                        color = Color.Red,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-
-                else -> {
-                    // 4. SUCESSO: Chama o Composable que desenha o conteúdo
-                    HomeContent(uiState = uiState)
-                }
-            }
+        else -> {
+            HomeContent(uiState = uiState)
         }
     }
 }
 
-// 5. Composable que desenha o conteúdo de sucesso (a lista de seções)
 @Composable
 fun HomeContent(uiState: HomeUiState) {
     LazyColumn(
@@ -126,7 +104,6 @@ fun HomeContent(uiState: HomeUiState) {
     }
 }
 
-// 6. Composable reutilizável para uma "Seção" (ex: "Populares" + lista horizontal)
 @Composable
 fun MovieSection(
     title: String,
@@ -151,34 +128,41 @@ fun MovieSection(
     }
 }
 
-// 7. Composable reutilizável para um único "Item de Filme" (o card com a imagem)
 @Composable
 fun MovieItem(movie: Movie) {
     Card(
         modifier = Modifier
-            .width(150.dp) // Largura fixa para o pôster
+            .width(150.dp)
     ) {
         Column {
             Image(
-                // 8. COIL: Carrega a imagem da internet
                 painter = rememberAsyncImagePainter(model = movie.posterUrl),
                 contentDescription = movie.title,
-                contentScale = ContentScale.Crop, // Garante que a imagem preencha o espaço
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(225.dp) // Altura fixa
+                    .height(225.dp)
             )
             Text(
                 text = movie.title,
                 fontWeight = FontWeight.SemiBold,
                 modifier = Modifier.padding(8.dp),
-                maxLines = 1
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
-            Text(
-                text = movie.releaseYear,
-                fontSize = 12.sp,
-                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-            )
+            Row {
+                Text(
+                    text = "${movie.releaseYear} - ${
+                        String.format(
+                            Locale.getDefault(),
+                            "%.1f",
+                            movie.voteAverage
+                        )
+                    }",
+                    fontSize = 12.sp,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
         }
     }
 }
