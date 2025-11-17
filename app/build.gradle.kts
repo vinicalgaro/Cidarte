@@ -83,4 +83,5 @@ dependencies {
     implementation(libs.lifecycle.viewModelCompose)
     implementation(libs.navigation.compose)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.ui.text.google.fonts)
 }

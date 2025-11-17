@@ -16,6 +16,7 @@ lifecycle = "2.9.4"
 navigationCompose = "2.9.6"
 coil = "2.5.0"
 ksp = "2.0.21-1.0.26"
+googleFonts = "1.9.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -43,6 +44,7 @@ lifecycle-runtimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime
 lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "googleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
