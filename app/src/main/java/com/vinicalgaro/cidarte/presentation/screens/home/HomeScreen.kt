@@ -12,9 +12,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
 import com.vinicalgaro.cidarte.presentation.components.MovieSection
 
@@ -38,9 +40,11 @@ fun HomeScreen(
 
             uiState.error != null -> {
                 Text(
-                    text = "Houve um erro ao carregar o conteúdo...",
+                    text = stringResource(R.string.error_ao_carregar_conteudo),
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxSize().padding(16.dp)
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
                 )
             }
 
@@ -54,12 +58,14 @@ fun HomeScreen(
 @Composable
 fun HomeContent(uiState: HomeUiState) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(top = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 16.dp),
     ) {
         if (uiState.popularMovies.isNotEmpty()) {
             item {
                 MovieSection(
-                    title = "Populares",
+                    title = stringResource(R.string.section_populares),
                     movies = uiState.popularMovies
                 )
             }
@@ -68,7 +74,7 @@ fun HomeContent(uiState: HomeUiState) {
         if (uiState.nowPlayingMovies.isNotEmpty()) {
             item {
                 MovieSection(
-                    title = "Em Cartaz",
+                    title = stringResource(R.string.section_em_cartaz),
                     movies = uiState.nowPlayingMovies
                 )
             }
@@ -77,7 +83,7 @@ fun HomeContent(uiState: HomeUiState) {
         if (uiState.topRatedMovies.isNotEmpty()) {
             item {
                 MovieSection(
-                    title = "Mais Votados",
+                    title = stringResource(R.string.section_mais_votados),
                     movies = uiState.topRatedMovies
                 )
             }

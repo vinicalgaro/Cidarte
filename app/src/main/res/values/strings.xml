@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Cidarte</string>
+    <string name="section_populares">Populares</string>
+    <string name="section_em_cartaz">Em Cartaz</string>
+    <string name="section_mais_votados">Mais Votados</string>
+    <string name="error_ao_carregar_conteudo">Houve um erro ao carregar o conteúdo...</string>
 </resources>
