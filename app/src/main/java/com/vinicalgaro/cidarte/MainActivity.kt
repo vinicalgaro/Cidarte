@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
-import com.vinicalgaro.cidarte.presentation.screens.home.HomeScreen
+import com.vinicalgaro.cidarte.presentation.navigation.AppNavigation
 import com.vinicalgaro.cidarte.presentation.theme.CidarteTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    HomeScreen()
+                    AppNavigation()
                 }
             }
         }

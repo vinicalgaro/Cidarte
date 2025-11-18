@@ -23,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val getEmCartazMoviesUseCase: GetEmCartazMoviesUseCase,
     private val getEmBreveMoviesUseCase: GetEmBreveMoviesUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(HomeUiState(isLoading = true))
+    private val _uiState = MutableStateFlow(HomeUiState())
 
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
@@ -33,7 +33,7 @@ class HomeViewModel @Inject constructor(
 
     private fun loadAllMovies() {
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isLoading = true, hasError = false) }
 
             try {
                 val popularDeferred = async { getPopularMoviesUseCase().first() }
@@ -41,28 +41,26 @@ class HomeViewModel @Inject constructor(
                 val nowPlayingDeferred = async { getEmCartazMoviesUseCase().first() }
                 val emBreveDeferred = async { getEmBreveMoviesUseCase().first() }
 
-
                 val popularMovies = popularDeferred.await()
                 val topRatedMovies = topRatedDeferred.await()
                 val nowPlayingMovies = nowPlayingDeferred.await()
                 val emBreveMovies = emBreveDeferred.await()
 
-
                 _uiState.update {
                     it.copy(
-                        isLoading = false,
                         popularMovies = popularMovies,
                         topRatedMovies = topRatedMovies,
                         nowPlayingMovies = nowPlayingMovies,
                         emBreveMovies = emBreveMovies
                     )
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        error = e.message ?: "Ocorreu um erro desconhecido"
-                    )
+                    it.copy(hasError = true)
+                }
+            } finally {
+                _uiState.update {
+                    it.copy(isLoading = false)
                 }
             }
         }

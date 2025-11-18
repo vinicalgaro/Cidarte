@@ -6,4 +6,5 @@
     <string name="section_em_breve">Em Breve</string>
     <string name="error_ao_carregar_conteudo">Houve um erro ao carregar o conteúdo...</string>
     <string name="ver_mais">Ver Mais</string>
+    <string name="voltar">Voltar</string>
 </resources>

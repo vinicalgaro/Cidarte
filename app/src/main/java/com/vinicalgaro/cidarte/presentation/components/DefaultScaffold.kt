@@ -2,8 +2,12 @@ package com.vinicalgaro.cidarte.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -19,6 +23,7 @@ import com.vinicalgaro.cidarte.presentation.theme.BebasNeue
 fun DefaultScaffold(
     modifier: Modifier = Modifier,
     title: String? = null,
+    onNavigateBack: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
     val isHome = title == null
@@ -42,6 +47,16 @@ fun DefaultScaffold(
                         }
                     )
                 },
+                navigationIcon = {
+                    onNavigateBack?.let { callback ->
+                        IconButton(onClick = callback) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.voltar)
+                            )
+                        }
+                    }
+                }
             )
         }
     ) { innerPadding ->

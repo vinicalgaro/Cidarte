@@ -50,7 +50,7 @@ private fun BaseMovieCard(
 }
 
 @Composable
-fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit = {}) {
+fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit = {}, onlyImage: Boolean = false) {
     BaseMovieCard(onClick = onClick, maxWidth = maxWidth) {
         Image(
             painter = rememberAsyncImagePainter(model = movie.posterUrl),
@@ -60,18 +60,20 @@ fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit = {}) {
                 .fillMaxWidth()
                 .weight(1f)
         )
-        Text(
-            text = movie.title,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(8.dp),
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Text(
-            text = getFormattedDescription(movie),
-            fontSize = 12.sp,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
-        )
+        if (!onlyImage) {
+            Text(
+                text = movie.title,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(8.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                text = getFormattedDescription(movie),
+                fontSize = 12.sp,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+        }
     }
 }
 
