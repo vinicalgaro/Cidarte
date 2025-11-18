@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
@@ -33,10 +34,10 @@ import java.util.Locale
 private fun BaseMovieCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
+    maxWidth: Dp,
     content: @Composable ColumnScope.() -> Unit
 ) {
     val maxHeight = 225.dp
-    val maxWidth = 150.dp
 
     Card(
         modifier = modifier
@@ -49,8 +50,8 @@ private fun BaseMovieCard(
 }
 
 @Composable
-fun MovieItem(movie: Movie, onClick: () -> Unit = {}) {
-    BaseMovieCard(onClick = onClick) {
+fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit = {}) {
+    BaseMovieCard(onClick = onClick, maxWidth = maxWidth) {
         Image(
             painter = rememberAsyncImagePainter(model = movie.posterUrl),
             contentDescription = movie.title,
@@ -85,8 +86,8 @@ private fun getFormattedDescription(movie: Movie): String = "${movie.releaseYear
 }"
 
 @Composable
-fun SeeMoreItem(onClick: () -> Unit) {
-    BaseMovieCard(onClick = onClick) {
+fun SeeMoreItem(onClick: () -> Unit, maxWidth: Dp) {
+    BaseMovieCard(onClick = onClick, maxWidth = maxWidth) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
