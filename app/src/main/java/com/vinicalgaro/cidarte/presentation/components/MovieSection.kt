@@ -60,7 +60,6 @@ fun MovieSection(
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        1
         Box(modifier = Modifier.fillMaxWidth()) {
             Box(
                 modifier = Modifier
