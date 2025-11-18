@@ -1,9 +1,11 @@
 package com.vinicalgaro.cidarte.presentation.screens.home
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
@@ -17,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.vinicalgaro.cidarte.R
+import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
 import com.vinicalgaro.cidarte.presentation.components.MovieSection
 
@@ -62,31 +65,38 @@ fun HomeContent(uiState: HomeUiState) {
             .fillMaxSize()
             .padding(top = 16.dp),
     ) {
-        if (uiState.popularMovies.isNotEmpty()) {
-            item {
-                MovieSection(
-                    title = stringResource(R.string.section_populares),
-                    movies = uiState.popularMovies
-                )
-            }
-        }
+        movieListSection(
+            titleResId = R.string.section_populares,
+            movies = uiState.popularMovies
+        )
 
-        if (uiState.nowPlayingMovies.isNotEmpty()) {
-            item {
-                MovieSection(
-                    title = stringResource(R.string.section_em_cartaz),
-                    movies = uiState.nowPlayingMovies
-                )
-            }
-        }
+        movieListSection(
+            titleResId = R.string.section_em_cartaz,
+            movies = uiState.nowPlayingMovies
+        )
 
-        if (uiState.topRatedMovies.isNotEmpty()) {
-            item {
-                MovieSection(
-                    title = stringResource(R.string.section_mais_votados),
-                    movies = uiState.topRatedMovies
-                )
-            }
+        movieListSection(
+            titleResId = R.string.section_mais_votados,
+            movies = uiState.topRatedMovies
+        )
+
+        movieListSection(
+            titleResId = R.string.section_em_breve,
+            movies = uiState.emBreveMovies
+        )
+    }
+}
+
+private fun LazyListScope.movieListSection(
+    @StringRes titleResId: Int,
+    movies: List<Movie>
+) {
+    if (movies.isNotEmpty()) {
+        item {
+            MovieSection(
+                title = stringResource(id = titleResId),
+                movies = movies
+            )
         }
     }
 }

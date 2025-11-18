@@ -13,4 +13,7 @@ interface TmdbApi {
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(): TmdbListResponse<MovieDto>
+
+    @GET("movie/upcoming")
+    suspend fun getEmBreveMovies(): TmdbListResponse<MovieDto>
 }

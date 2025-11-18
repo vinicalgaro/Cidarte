@@ -2,6 +2,7 @@ package com.vinicalgaro.cidarte.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vinicalgaro.cidarte.domain.usecase.GetEmBreveMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetEmCartazMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetTopRatedMoviesUseCase
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getEmCartazMoviesUseCase: GetEmCartazMoviesUseCase
+    private val getEmCartazMoviesUseCase: GetEmCartazMoviesUseCase,
+    private val getEmBreveMoviesUseCase: GetEmBreveMoviesUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(HomeUiState(isLoading = true))
 
@@ -37,17 +39,22 @@ class HomeViewModel @Inject constructor(
                 val popularDeferred = async { getPopularMoviesUseCase().first() }
                 val topRatedDeferred = async { getTopRatedMoviesUseCase().first() }
                 val nowPlayingDeferred = async { getEmCartazMoviesUseCase().first() }
+                val emBreveDeferred = async { getEmBreveMoviesUseCase().first() }
+
 
                 val popularMovies = popularDeferred.await()
                 val topRatedMovies = topRatedDeferred.await()
                 val nowPlayingMovies = nowPlayingDeferred.await()
+                val emBreveMovies = emBreveDeferred.await()
+
 
                 _uiState.update {
                     it.copy(
                         isLoading = false,
                         popularMovies = popularMovies,
                         topRatedMovies = topRatedMovies,
-                        nowPlayingMovies = nowPlayingMovies
+                        nowPlayingMovies = nowPlayingMovies,
+                        emBreveMovies = emBreveMovies
                     )
                 }
             } catch (e: Exception) {

@@ -20,8 +20,13 @@ import com.vinicalgaro.cidarte.domain.model.Movie
 @Composable
 fun MovieSection(
     title: String,
-    movies: List<Movie>
+    movies: List<Movie>,
+    onSeeMoreClick: () -> Unit = {}
 ) {
+    val maxSizeList = 5;
+    val displayMovies = movies.take(maxSizeList)
+    val showSeeMore = movies.size > maxSizeList
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = title,
@@ -33,8 +38,14 @@ fun MovieSection(
             contentPadding = PaddingValues(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(movies) { movie ->
+            items(displayMovies) { movie ->
                 MovieItem(movie = movie)
+            }
+
+            if (showSeeMore) {
+                item {
+                    SeeMoreItem(onClick = onSeeMoreClick)
+                }
             }
         }
         Spacer(modifier = Modifier.height(24.dp))

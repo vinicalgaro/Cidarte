@@ -5,7 +5,7 @@ data class Movie(
     val title: String,
     val overview: String,
     val releaseYear: String,
-    val voteAverage: Double,
+    val voteAverage: Double?,
     val voteCount: Int,
     val posterUrl: String,
     val backdropUrl: String

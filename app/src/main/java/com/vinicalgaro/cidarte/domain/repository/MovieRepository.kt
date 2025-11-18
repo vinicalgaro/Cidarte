@@ -7,4 +7,5 @@ interface MovieRepository {
     fun getPopularMovies(): Flow<List<Movie>>
     fun getEmCartazMovies(): Flow<List<Movie>>
     fun getTopRatedMovies(): Flow<List<Movie>>
+    fun getEmBreveMovies(): Flow<List<Movie>>
 }

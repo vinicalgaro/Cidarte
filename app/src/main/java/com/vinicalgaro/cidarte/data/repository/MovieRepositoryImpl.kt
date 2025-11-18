@@ -23,6 +23,9 @@ class MovieRepositoryImpl(
     override fun getEmCartazMovies(): Flow<List<Movie>> =
         getMoviesFromApi(apiCall = { api.getNowPlayingMovies() })
 
+    override fun getEmBreveMovies(): Flow<List<Movie>> =
+        getMoviesFromApi(apiCall = { api.getEmBreveMovies() })
+
     private fun getMoviesFromApi(
         apiCall: suspend () -> TmdbListResponse<MovieDto>
     ): Flow<List<Movie>> = flow {

@@ -7,5 +7,6 @@ data class HomeUiState(
     val popularMovies: List<Movie> = emptyList(),
     val topRatedMovies: List<Movie> = emptyList(),
     val nowPlayingMovies: List<Movie> = emptyList(),
+    val emBreveMovies: List<Movie> = emptyList(),
     val error: String? = null
 )
