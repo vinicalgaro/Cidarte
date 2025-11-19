@@ -23,7 +23,7 @@ import com.vinicalgaro.cidarte.presentation.screens.sectiongrid.SectionType
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
-    onNavigateToGrid: (sectionType: String) -> Unit
+    onSeeMoreClick: (sectionType: String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -33,13 +33,13 @@ fun HomeScreen(
 
             uiState.hasError -> DefaultErrorComponent()
 
-            else -> HomeContent(uiState = uiState, onNavigateToGrid)
+            else -> HomeContent(uiState = uiState, onSeeMoreClick)
         }
     }
 }
 
 @Composable
-private fun HomeContent(uiState: HomeUiState, onNavigateToGrid: (sectionType: String) -> Unit) {
+private fun HomeContent(uiState: HomeUiState, onSeeMoreClick: (sectionType: String) -> Unit) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -49,28 +49,28 @@ private fun HomeContent(uiState: HomeUiState, onNavigateToGrid: (sectionType: St
             titleResId = R.string.section_populares,
             movies = uiState.popularMovies,
             sectionType = SectionType.POPULAR,
-            onNavigateToGrid = onNavigateToGrid
+            onSeeMoreClick = onSeeMoreClick
         )
 
         movieListSection(
             titleResId = R.string.section_em_cartaz,
             movies = uiState.nowPlayingMovies,
             sectionType = SectionType.NOW_PLAYING,
-            onNavigateToGrid = onNavigateToGrid
+            onSeeMoreClick = onSeeMoreClick
         )
 
         movieListSection(
             titleResId = R.string.section_mais_votados,
             movies = uiState.topRatedMovies,
             sectionType = SectionType.TOP_RATED,
-            onNavigateToGrid = onNavigateToGrid
+            onSeeMoreClick = onSeeMoreClick
         )
 
         movieListSection(
             titleResId = R.string.section_em_breve,
             movies = uiState.emBreveMovies,
             sectionType = SectionType.UPCOMING,
-            onNavigateToGrid = onNavigateToGrid
+            onSeeMoreClick = onSeeMoreClick
         )
     }
 }
@@ -79,14 +79,14 @@ private fun LazyListScope.movieListSection(
     @StringRes titleResId: Int,
     movies: List<Movie>,
     sectionType: String,
-    onNavigateToGrid: (sectionType: String) -> Unit
+    onSeeMoreClick: (sectionType: String) -> Unit
 ) {
     if (movies.isNotEmpty()) {
         item {
             MovieSection(
                 title = stringResource(id = titleResId),
                 movies = movies,
-                onSeeMoreClick = { onNavigateToGrid(sectionType) }
+                onClick = { onSeeMoreClick(sectionType) }
             )
         }
     }

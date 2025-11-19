@@ -26,7 +26,7 @@ fun AppNavigation() {
     ) {
         composable(Destinations.HOME_ROUTE) {
             HomeScreen(
-                onNavigateToGrid = { sectionType ->
+                onSeeMoreClick = { sectionType ->
                     navController.navigate(
                         route = "${Destinations.GRID_ROUTE_BASE}/$sectionType"
                     )

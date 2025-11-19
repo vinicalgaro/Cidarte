@@ -31,7 +31,7 @@ import com.vinicalgaro.cidarte.domain.model.Movie
 fun MovieSection(
     title: String,
     movies: List<Movie>,
-    onSeeMoreClick: () -> Unit = {}
+    onClick: () -> Unit = {}
 ) {
     val maxSizeList = 5
     val displayMovies = movies.take(maxSizeList)
@@ -95,7 +95,7 @@ fun MovieSection(
 
                     if (showSeeMore) {
                         item {
-                            SeeMoreItem(onClick = onSeeMoreClick, maxWidth = maxWidth)
+                            SeeMoreItem(onClick = onClick, maxWidth = maxWidth)
                         }
                     }
                 }
