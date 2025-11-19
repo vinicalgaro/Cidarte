@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
         loadAllMovies()
     }
 
-    private fun loadAllMovies() {
+    fun loadAllMovies() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
 

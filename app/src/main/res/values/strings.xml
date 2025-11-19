@@ -4,8 +4,9 @@
     <string name="section_em_cartaz">Em Cartaz</string>
     <string name="section_mais_votados">Mais Votados</string>
     <string name="section_em_breve">Em Breve</string>
-    <string name="error_ao_carregar_conteudo">Houve um erro ao carregar o conteúdo...</string>
+    <string name="error_ao_carregar_conteudo">Corta! Vamos rodar essa cena de novo...</string>
     <string name="ver_mais">Ver Mais</string>
     <string name="voltar">Voltar</string>
     <string name="error">Erro</string>
+    <string name="tentar_novamente">Tentar Novamente</string>
 </resources>

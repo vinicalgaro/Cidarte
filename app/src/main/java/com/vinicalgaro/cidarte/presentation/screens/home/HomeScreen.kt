@@ -31,7 +31,7 @@ fun HomeScreen(
         when {
             uiState.isLoading -> DefaultLoadingComponent()
 
-            uiState.hasError -> DefaultErrorComponent()
+            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::loadAllMovies)
 
             else -> HomeContent(uiState = uiState, onSeeMoreClick)
         }

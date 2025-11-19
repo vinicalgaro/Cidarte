@@ -32,7 +32,7 @@ fun SectionGridScreen(
         when {
             uiState.isLoading -> DefaultLoadingComponent()
 
-            uiState.hasError -> DefaultErrorComponent()
+            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::tryAgain)
 
             else -> SectionGridContent(uiState.movies)
         }

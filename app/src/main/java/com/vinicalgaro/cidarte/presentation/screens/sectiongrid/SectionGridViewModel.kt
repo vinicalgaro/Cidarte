@@ -88,4 +88,8 @@ class SectionGridViewModel @Inject constructor(
             }
         }
     }
+
+    fun tryAgain() {
+        loadSectionMovies(_sectionType)
+    }
 }
