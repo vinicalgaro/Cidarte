@@ -3,7 +3,7 @@ package com.vinicalgaro.cidarte.presentation.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -43,7 +43,9 @@ fun DefaultScaffold(
                                 fontSize = 32.sp
                             )
                         } else {
-                            defaultStyle
+                            defaultStyle.copy(
+                                fontSize = 24.sp
+                            )
                         }
                     )
                 },
@@ -51,7 +53,7 @@ fun DefaultScaffold(
                     onNavigateBack?.let { callback ->
                         IconButton(onClick = callback) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
                                 contentDescription = stringResource(R.string.voltar)
                             )
                         }
