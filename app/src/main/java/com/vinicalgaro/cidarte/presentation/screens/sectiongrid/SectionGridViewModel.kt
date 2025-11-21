@@ -10,6 +10,7 @@ import com.vinicalgaro.cidarte.domain.usecase.GetEmBreveMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetEmCartazMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetTopRatedMoviesUseCase
+import com.vinicalgaro.cidarte.presentation.navigation.AppRoutes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +30,7 @@ class SectionGridViewModel @Inject constructor(
     private val application: Application
 ) : ViewModel() {
     private val _sectionType: String? =
-        savedStateHandle[SectionType.SECTION_TYPE_KEY]
+        savedStateHandle[AppRoutes.SECTION_TYPE_KEY]
     private val _uiState = MutableStateFlow(SectionGridUiState())
 
     val uiState = _uiState.asStateFlow()

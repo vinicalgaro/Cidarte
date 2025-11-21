@@ -14,5 +14,4 @@ object SectionType {
     const val TOP_RATED = "TOP_RATED"
     const val NOW_PLAYING = "NOW_PLAYING"
     const val UPCOMING = "UPCOMING"
-    const val SECTION_TYPE_KEY = "section_type"
 }

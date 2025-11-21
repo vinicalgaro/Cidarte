@@ -6,16 +6,13 @@ import com.vinicalgaro.cidarte.domain.model.Movie
 private const val BASE_IMAGE_URL: String = "https://image.tmdb.org/t/p/"
 
 fun MovieDto.toDomain(): Movie {
-    val year: String = releaseDate?.split('-')?.firstOrNull() ?: "N/A"
+    val year: String = releaseDate.split('-').firstOrNull() ?: ""
 
     return Movie(
         id = this.id,
         title = this.title,
-        overview = this.overview,
         releaseYear = year,
-        voteAverage = this.voteAverage,
-        voteCount = this.voteCount,
+        voteAverage = if (this.voteAverage == 0.0) null else this.voteAverage,
         posterUrl = "${BASE_IMAGE_URL}w500${this.posterPath}",
-        backdropUrl = "${BASE_IMAGE_URL}w780${this.backdropPath}"
     )
 }

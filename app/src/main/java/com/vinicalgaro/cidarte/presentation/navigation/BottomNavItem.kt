@@ -12,12 +12,23 @@ import androidx.compose.ui.graphics.vector.ImageVector
 sealed class BottomNavItem(
     val route: String,
     val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
+    val unselectedIcon: ImageVector
 ) {
-    object Home :
-        BottomNavItem(Destinations.HOME_ROUTE, Icons.Filled.Home, Icons.Outlined.Home)
-    object Search :
-        BottomNavItem(Destinations.SEARCH_ROUTE, Icons.Filled.SavedSearch, Icons.Outlined.Search)
-    object Settings :
-        BottomNavItem(Destinations.SETTINGS_ROUTE, Icons.Filled.Settings, Icons.Outlined.Settings)
+    object Home : BottomNavItem(
+        route = AppRoutes.GRAPH_HOME,
+        selectedIcon = Icons.Filled.Home,
+        unselectedIcon = Icons.Outlined.Home,
+    )
+
+    object Search : BottomNavItem(
+        route = AppRoutes.GRAPH_SEARCH,
+        selectedIcon = Icons.Filled.SavedSearch,
+        unselectedIcon = Icons.Outlined.Search
+    )
+
+    object Settings : BottomNavItem(
+        route = AppRoutes.GRAPH_SETTINGS,
+        selectedIcon = Icons.Filled.Settings,
+        unselectedIcon = Icons.Outlined.Settings
+    )
 }
