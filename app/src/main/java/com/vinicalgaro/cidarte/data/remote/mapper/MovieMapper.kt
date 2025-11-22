@@ -3,7 +3,7 @@ package com.vinicalgaro.cidarte.data.remote.mapper
 import com.vinicalgaro.cidarte.data.remote.dto.MovieDto
 import com.vinicalgaro.cidarte.domain.model.Movie
 
-private const val BASE_IMAGE_URL: String = "https://image.tmdb.org/t/p/"
+const val BASE_IMAGE_URL: String = "https://image.tmdb.org/t/p/"
 
 fun MovieDto.toDomain(): Movie {
     val year: String = releaseDate.split('-').firstOrNull() ?: ""

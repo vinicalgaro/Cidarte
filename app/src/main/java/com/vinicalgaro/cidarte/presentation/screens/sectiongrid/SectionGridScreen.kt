@@ -21,7 +21,8 @@ import com.vinicalgaro.cidarte.presentation.components.MovieItem
 @Composable
 fun SectionGridScreen(
     viewModel: SectionGridViewModel = hiltViewModel(),
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onMovieClick: (movieId: Int) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -32,15 +33,15 @@ fun SectionGridScreen(
         when {
             uiState.isLoading -> DefaultLoadingComponent()
 
-            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::tryAgain)
+            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::loadSectionMovies)
 
-            else -> SectionGridContent(uiState.movies)
+            else -> SectionGridContent(uiState.movies, onMovieClick)
         }
     }
 }
 
 @Composable
-private fun SectionGridContent(movies: List<Movie>) {
+private fun SectionGridContent(movies: List<Movie>, onMovieClick: (movieId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -49,7 +50,7 @@ private fun SectionGridContent(movies: List<Movie>) {
         modifier = Modifier.fillMaxSize()
     ) {
         items(movies) { m ->
-            MovieItem(movie = m, 120.dp, onlyImage = true)
+            MovieItem(movie = m, 120.dp, onlyImage = true, onClick = { onMovieClick(m.id) })
         }
     }
 }

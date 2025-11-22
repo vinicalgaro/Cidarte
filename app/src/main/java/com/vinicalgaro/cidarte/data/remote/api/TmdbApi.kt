@@ -1,8 +1,10 @@
 package com.vinicalgaro.cidarte.data.remote.api
 
+import com.vinicalgaro.cidarte.data.remote.dto.MovieDetailsDto
 import com.vinicalgaro.cidarte.data.remote.dto.MovieDto
 import com.vinicalgaro.cidarte.data.remote.dto.TmdbListResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface TmdbApi {
     @GET("movie/popular")
@@ -16,4 +18,7 @@ interface TmdbApi {
 
     @GET("movie/upcoming")
     suspend fun getEmBreveMovies(): TmdbListResponse<MovieDto>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailsDto
 }

@@ -36,7 +36,7 @@ class SectionGridViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        loadSectionMovies(_sectionType)
+        loadSectionMovies()
     }
 
     private fun getMoviesBySectionType(sectionType: String?): Pair<Flow<List<Movie>>, Int>? {
@@ -63,11 +63,11 @@ class SectionGridViewModel @Inject constructor(
         }
     }
 
-    private fun loadSectionMovies(sectionType: String?) {
+    fun loadSectionMovies() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
 
-            val pair: Pair<Flow<List<Movie>>, Int>? = getMoviesBySectionType(sectionType)
+            val pair: Pair<Flow<List<Movie>>, Int>? = getMoviesBySectionType(_sectionType)
 
             if (pair != null) {
                 val (useCase, titleResId) = pair
@@ -88,9 +88,5 @@ class SectionGridViewModel @Inject constructor(
                 _uiState.update { it.copy(hasError = true, isLoading = false) }
             }
         }
-    }
-
-    fun tryAgain() {
-        loadSectionMovies(_sectionType)
     }
 }

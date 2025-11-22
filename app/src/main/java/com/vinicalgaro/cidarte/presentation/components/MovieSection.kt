@@ -31,7 +31,8 @@ import com.vinicalgaro.cidarte.domain.model.Movie
 fun MovieSection(
     title: String,
     movies: List<Movie>,
-    onClick: () -> Unit = {}
+    onSeeMoreClick: () -> Unit,
+    onMovieClick: (movieId: Int) -> Unit
 ) {
     val maxSizeList = 5
     val displayMovies = movies.take(maxSizeList)
@@ -68,7 +69,8 @@ fun MovieSection(
             ) {
                 VerticalDivider(
                     modifier = Modifier
-                        .fillMaxHeight(dividerHeightFraction).padding(bottom = 2.dp),
+                        .fillMaxHeight(dividerHeightFraction)
+                        .padding(bottom = 2.dp),
                     color = MaterialTheme.colorScheme.onBackground,
                 )
             }
@@ -90,12 +92,15 @@ fun MovieSection(
                     horizontalArrangement = Arrangement.spacedBy(horizontalArrangement)
                 ) {
                     items(displayMovies) { movie ->
-                        MovieItem(movie = movie, maxWidth = maxWidth)
+                        MovieItem(
+                            movie = movie,
+                            maxWidth = maxWidth,
+                            onClick = { onMovieClick(movie.id) })
                     }
 
                     if (showSeeMore) {
                         item {
-                            SeeMoreItem(onClick = onClick, maxWidth = maxWidth)
+                            SeeMoreItem(onClick = onSeeMoreClick, maxWidth = maxWidth)
                         }
                     }
                 }

@@ -1,9 +1,9 @@
 package com.vinicalgaro.cidarte.presentation.screens.detailedmovie
 
-import com.vinicalgaro.cidarte.domain.model.Movie
+import com.vinicalgaro.cidarte.domain.model.MovieDetails
 
 data class DetailedMovieUiState(
     val isLoading: Boolean = false,
     val hasError: Boolean = false,
-    val movie: Movie
+    val movie: MovieDetails? = null
 )

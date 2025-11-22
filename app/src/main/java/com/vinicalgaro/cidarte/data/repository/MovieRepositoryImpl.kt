@@ -5,6 +5,7 @@ import com.vinicalgaro.cidarte.data.remote.dto.MovieDto
 import com.vinicalgaro.cidarte.data.remote.dto.TmdbListResponse
 import com.vinicalgaro.cidarte.data.remote.mapper.toDomain
 import com.vinicalgaro.cidarte.domain.model.Movie
+import com.vinicalgaro.cidarte.domain.model.MovieDetails
 import com.vinicalgaro.cidarte.domain.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -25,6 +26,12 @@ class MovieRepositoryImpl(
 
     override fun getEmBreveMovies(): Flow<List<Movie>> =
         getMoviesFromApi(apiCall = { api.getEmBreveMovies() })
+
+    override fun getMovieDetails(movieId: Int): Flow<MovieDetails> = flow {
+        val movieDto = api.getMovieDetails(movieId)
+        val movieDetail = movieDto.toDomain()
+        emit(movieDetail)
+    }
 
     private fun getMoviesFromApi(
         apiCall: suspend () -> TmdbListResponse<MovieDto>

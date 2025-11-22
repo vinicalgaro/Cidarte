@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.vinicalgaro.cidarte.presentation.components.CidarteBottomNavigationBar
+import com.vinicalgaro.cidarte.presentation.screens.detailedmovie.DetailedMovieScreen
 import com.vinicalgaro.cidarte.presentation.screens.home.HomeScreen
 import com.vinicalgaro.cidarte.presentation.screens.search.SearchScreen
 import com.vinicalgaro.cidarte.presentation.screens.sectiongrid.SectionGridScreen
@@ -40,7 +42,10 @@ fun AppNavigation() {
                 composable(AppRoutes.SCREEN_HOME) {
                     HomeScreen(
                         onSeeMoreClick = { sectionType ->
-                            navController.navigate("${AppRoutes.SCREEN_GRID_BASE}/$sectionType")
+                            navigateToSectionGrid(navController, sectionType)
+                        },
+                        onMovieClick = { movieId ->
+                            navigateToMovieDetails(navController, movieId)
                         }
                     )
                 }
@@ -52,7 +57,10 @@ fun AppNavigation() {
                     })
                 ) {
                     SectionGridScreen(
-                        onNavigateBack = { navController.popBackStack() }
+                        onNavigateBack = { navController.popBackStack() },
+                        onMovieClick = { movieId ->
+                            navigateToMovieDetails(navController, movieId)
+                        }
                     )
                 }
             }
@@ -74,8 +82,20 @@ fun AppNavigation() {
             }
             composable(
                 route = AppRoutes.SCREEN_MOVIE_DETAIL,
-                arguments = listOf(navArgument(AppRoutes.MOVIE_ID_KEY) { type = NavType.IntType })
-            ) {}
+                arguments = listOf(navArgument(AppRoutes.MOVIE_ID_KEY) {
+                    type = NavType.IntType
+                })
+            ) {
+                DetailedMovieScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
         }
     }
 }
+
+private fun navigateToMovieDetails(navController: NavHostController, movieId: Int) =
+    navController.navigate("${AppRoutes.SCREEN_MOVIE_DETAIL_BASE}/$movieId")
+
+private fun navigateToSectionGrid(navController: NavHostController, sectionType: String) =
+    navController.navigate("${AppRoutes.SCREEN_GRID_BASE}/$sectionType")

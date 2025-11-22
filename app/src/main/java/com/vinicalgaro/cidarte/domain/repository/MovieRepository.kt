@@ -1,6 +1,7 @@
 package com.vinicalgaro.cidarte.domain.repository
 
 import com.vinicalgaro.cidarte.domain.model.Movie
+import com.vinicalgaro.cidarte.domain.model.MovieDetails
 import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
@@ -8,4 +9,5 @@ interface MovieRepository {
     fun getEmCartazMovies(): Flow<List<Movie>>
     fun getTopRatedMovies(): Flow<List<Movie>>
     fun getEmBreveMovies(): Flow<List<Movie>>
+    fun getMovieDetails(movieId: Int): Flow<MovieDetails>
 }

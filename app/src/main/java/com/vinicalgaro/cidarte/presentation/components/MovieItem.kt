@@ -50,7 +50,7 @@ private fun BaseMovieCard(
 }
 
 @Composable
-fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit = {}, onlyImage: Boolean = false) {
+fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit, onlyImage: Boolean = false) {
     BaseMovieCard(onClick = onClick, maxWidth = maxWidth) {
         Image(
             painter = rememberAsyncImagePainter(model = movie.posterUrl),
