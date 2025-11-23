@@ -13,8 +13,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.InetSocketAddress
-import java.net.Proxy
 import java.net.ProxySelector
 import javax.inject.Singleton
 
@@ -39,6 +37,7 @@ object AppModule {
 
             val url = originalHttpUrl.newBuilder()
                 .addQueryParameter(API_KEY_STRING, API_KEY)
+                .addQueryParameter("language", "pt-BR")
                 .build()
 
             val requestBuilder = original.newBuilder().url(url)
