@@ -4,12 +4,15 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
@@ -24,9 +27,24 @@ import com.vinicalgaro.cidarte.presentation.screens.settings.SettingsScreen
 fun AppNavigation() {
     val navController = rememberNavController()
 
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    val topLevelDestinations = listOf(
+        AppRoutes.GRAPH_HOME,
+        AppRoutes.GRAPH_SEARCH,
+        AppRoutes.GRAPH_SETTINGS
+    )
+
+    val showBottomBar = currentDestination?.hierarchy?.any { destination ->
+        destination.route in topLevelDestinations
+    } == true
+
     Scaffold(
         bottomBar = {
-            CidarteBottomNavigationBar(navController = navController)
+            if (showBottomBar) {
+                CidarteBottomNavigationBar(navController = navController)
+            }
         },
         contentWindowInsets = WindowInsets(0.dp)
     ) { innerPadding ->
