@@ -16,4 +16,17 @@
     <string name="qual_filme_voce_quer_pesquisar">Qual filme está procurando?</string>
     <string name="limpar_busca">Limpar busca</string>
     <string name="descubra_algo_novo">Descubra Algo Novo</string>
+    <string name="minhas_colecoes">Minhas Coleções</string>
+    <string name="quero_ver">Quero Ver</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="sobre">Sobre</string>
+    <string name="linkedi_url">https://www.linkedin.com/in/viniciuscalgaro/</string>
+    <string name="membro_desde">Membro desde %1$s</string>
+    <string name="cinefilo">Cinéfilo</string>
+    <string name="nao_sabe_o_que_ver">Não sabe o que ver?</string>
+    <string name="girar_a_roleta">Girar a Roleta</string>
+    <string name="sortear_filme">Sortear filme</string>
+    <string name="versao_do_app">Versão do App</string>
+    <string name="desenvolvido_por">Desenvolvido por</string>
+    <string name="vinicius_calgaro_linkedin">Vinicius Calgaro (LinkedIn)</string>
 </resources>

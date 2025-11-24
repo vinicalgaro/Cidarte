@@ -23,10 +23,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.composables.icons.lucide.Lucide
 import com.composables.icons.lucide.Search
@@ -37,6 +35,7 @@ import com.vinicalgaro.cidarte.presentation.components.DefaultErrorComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultLoadingComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
 import com.vinicalgaro.cidarte.presentation.components.MovieItem
+import com.vinicalgaro.cidarte.presentation.components.SectionHeader
 
 @Composable
 fun SearchScreen(
@@ -139,17 +138,10 @@ fun SuggestedMoviesState(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(16.dp),
-        modifier = Modifier.fillMaxSize()
+        contentPadding = PaddingValues(16.dp), modifier = Modifier.fillMaxSize()
     ) {
         item(span = { GridItemSpan(maxLineSpan) }) {
-            Text(
-                text = stringResource(R.string.descubra_algo_novo),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
+            SectionHeader(stringResource(R.string.descubra_algo_novo))
         }
 
         items(movies, key = { it.id }) { movie ->
