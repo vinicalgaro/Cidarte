@@ -17,7 +17,7 @@ import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.presentation.components.DefaultErrorComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultLoadingComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
-import com.vinicalgaro.cidarte.presentation.components.MovieSection
+import com.vinicalgaro.cidarte.presentation.screens.home.components.MovieSection
 import com.vinicalgaro.cidarte.presentation.screens.sectiongrid.SectionType
 
 @Composable

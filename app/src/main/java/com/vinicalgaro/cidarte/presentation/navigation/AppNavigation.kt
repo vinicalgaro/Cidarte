@@ -83,9 +83,16 @@ fun AppNavigation() {
                 startDestination = AppRoutes.SCREEN_LIBRARY
             ) {
                 composable(AppRoutes.SCREEN_LIBRARY) {
-                    LibraryScreen(onCollectionClick = { sectionType ->
-                        navigateToSectionGrid(navController, sectionType)
-                    })
+                    LibraryScreen(
+                        onCollectionClick = { sectionType ->
+                            navigateToSectionGrid(navController, sectionType)
+                        },
+                        onGoToMovieClick = { movieId ->
+                            navigateToMovieDetails(
+                                navController,
+                                movieId
+                            )
+                        })
                 }
             }
             composable(
