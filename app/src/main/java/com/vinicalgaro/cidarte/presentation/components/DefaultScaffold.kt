@@ -2,8 +2,6 @@ package com.vinicalgaro.cidarte.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -16,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
+import com.composables.icons.lucide.ChevronLeft
+import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.presentation.theme.BebasNeue
 
@@ -25,6 +25,7 @@ fun DefaultScaffold(
     modifier: Modifier = Modifier,
     title: String? = null,
     onNavigateBack: (() -> Unit)? = null,
+    hideTopBar: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val isHome = title == null
@@ -32,6 +33,7 @@ fun DefaultScaffold(
     return Scaffold(
         modifier = modifier,
         topBar = {
+            if (!hideTopBar)
             CenterAlignedTopAppBar(
                 title = {
                     val defaultStyle = MaterialTheme.typography.titleLarge
@@ -56,7 +58,7 @@ fun DefaultScaffold(
                     onNavigateBack?.let { callback ->
                         IconButton(onClick = callback) {
                             Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBackIos,
+                                imageVector = Lucide.ChevronLeft,
                                 contentDescription = stringResource(R.string.voltar)
                             )
                         }

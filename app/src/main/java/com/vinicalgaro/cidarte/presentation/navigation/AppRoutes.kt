@@ -8,7 +8,7 @@ object AppRoutes {
     // --- GRAFOS ---
     const val GRAPH_HOME = "home_graph"
     const val GRAPH_SEARCH = "search_graph"
-    const val GRAPH_ABOUT = "about_graph"
+    const val GRAPH_LIBRARY = "about_graph"
 
     // --- TELAS DA HOME ---
     const val SCREEN_HOME = "home_screen"
@@ -19,7 +19,7 @@ object AppRoutes {
     const val SCREEN_SEARCH = "search_screen"
 
     // --- TELAS DE ABOUT ---
-    const val SCREEN_ABOUT = "about_screen"
+    const val SCREEN_LIBRARY = "about_screen"
 
     // --- TELAS GLOBAIS ---
     const val SCREEN_MOVIE_DETAIL_BASE = "movie_detail"

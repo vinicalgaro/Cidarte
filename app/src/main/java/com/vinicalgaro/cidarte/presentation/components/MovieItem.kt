@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -27,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.composables.icons.lucide.CircleArrowRight
+import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.Movie
 import java.util.Locale
@@ -100,7 +100,7 @@ fun SeeMoreItem(onClick: () -> Unit, maxWidth: Dp) {
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    imageVector = Lucide.CircleArrowRight,
                     contentDescription = null,
                     modifier = Modifier.size(48.dp)
                 )

@@ -85,4 +85,5 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.androidx.material.icons.extended)
+    implementation(libs.icons.lucide)
 }

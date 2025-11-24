@@ -1,13 +1,12 @@
 package com.vinicalgaro.cidarte.presentation.navigation
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.SavedSearch
-import androidx.compose.material.icons.outlined.Home
-import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.composables.icons.lucide.House
+import com.composables.icons.lucide.Library
+import com.composables.icons.lucide.LibraryBig
+import com.composables.icons.lucide.Lucide
+import com.composables.icons.lucide.Search
+import com.composables.icons.lucide.SearchSlash
 
 sealed class BottomNavItem(
     val route: String,
@@ -16,19 +15,19 @@ sealed class BottomNavItem(
 ) {
     object Home : BottomNavItem(
         route = AppRoutes.GRAPH_HOME,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
+        selectedIcon = Lucide.House,
+        unselectedIcon = Lucide.House,
     )
 
     object Search : BottomNavItem(
         route = AppRoutes.GRAPH_SEARCH,
-        selectedIcon = Icons.Filled.SavedSearch,
-        unselectedIcon = Icons.Outlined.Search
+        selectedIcon = Lucide.SearchSlash,
+        unselectedIcon = Lucide.Search
     )
 
-    object About : BottomNavItem(
-        route = AppRoutes.GRAPH_ABOUT,
-        selectedIcon = Icons.Filled.Info,
-        unselectedIcon = Icons.Outlined.Info
+    object Lib : BottomNavItem(
+        route = AppRoutes.GRAPH_LIBRARY,
+        selectedIcon = Lucide.LibraryBig,
+        unselectedIcon = Lucide.Library
     )
 }
