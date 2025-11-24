@@ -33,6 +33,9 @@ class MovieRepositoryImpl(
         emit(movieDetail)
     }
 
+    override fun searchMovies(query: String): Flow<List<Movie>> =
+        getMoviesFromApi(apiCall = { api.searchMovies(query) })
+
     private fun getMoviesFromApi(
         apiCall: suspend () -> TmdbListResponse<MovieDto>
     ): Flow<List<Movie>> = flow {

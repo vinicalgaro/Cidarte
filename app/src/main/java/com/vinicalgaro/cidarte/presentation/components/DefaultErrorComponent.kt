@@ -25,7 +25,8 @@ import com.vinicalgaro.cidarte.R
 
 @Composable
 fun DefaultErrorComponent(
-    onRetry: () -> Unit
+    onRetry: (() -> Unit)? = null,
+    text: String = stringResource(R.string.error_ao_carregar_conteudo)
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -40,21 +41,23 @@ fun DefaultErrorComponent(
                 .padding(bottom = 16.dp)
         )
         Text(
-            text = stringResource(R.string.error_ao_carregar_conteudo),
+            text = text,
             textAlign = TextAlign.Center,
             fontSize = 18.sp,
             modifier = Modifier.padding(horizontal = 32.dp)
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        IconButton(
-            onClick = onRetry,
-            modifier = Modifier.size(48.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = stringResource(R.string.tentar_novamente),
-                modifier = Modifier.size(50.dp)
-            )
+        if (onRetry != null) {
+            Spacer(modifier = Modifier.height(16.dp))
+            IconButton(
+                onClick = onRetry,
+                modifier = Modifier.size(48.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Refresh,
+                    contentDescription = stringResource(R.string.tentar_novamente),
+                    modifier = Modifier.size(50.dp)
+                )
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import com.vinicalgaro.cidarte.data.remote.dto.MovieDto
 import com.vinicalgaro.cidarte.data.remote.dto.TmdbListResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TmdbApi {
     @GET("movie/popular")
@@ -21,4 +22,7 @@ interface TmdbApi {
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailsDto
+
+    @GET("search/movie")
+    suspend fun searchMovies(@Query("query") query: String): TmdbListResponse<MovieDto>
 }

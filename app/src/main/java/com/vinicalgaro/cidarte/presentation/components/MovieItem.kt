@@ -1,6 +1,5 @@
 package com.vinicalgaro.cidarte.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -19,13 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.Movie
 import java.util.Locale
@@ -52,8 +53,11 @@ private fun BaseMovieCard(
 @Composable
 fun MovieItem(movie: Movie, maxWidth: Dp, onClick: () -> Unit, onlyImage: Boolean = false) {
     BaseMovieCard(onClick = onClick, maxWidth = maxWidth) {
-        Image(
-            painter = rememberAsyncImagePainter(model = movie.posterUrl),
+        if (movie.posterUrl == null) BrokenImage() else AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(movie.posterUrl)
+                .crossfade(true)
+                .build(),
             contentDescription = movie.title,
             contentScale = ContentScale.Crop,
             modifier = Modifier

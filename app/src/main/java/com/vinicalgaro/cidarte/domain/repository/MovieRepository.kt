@@ -10,4 +10,5 @@ interface MovieRepository {
     fun getTopRatedMovies(): Flow<List<Movie>>
     fun getEmBreveMovies(): Flow<List<Movie>>
     fun getMovieDetails(movieId: Int): Flow<MovieDetails>
+    fun searchMovies(query: String): Flow<List<Movie>>
 }

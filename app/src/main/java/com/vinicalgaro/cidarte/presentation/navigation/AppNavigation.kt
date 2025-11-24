@@ -87,7 +87,9 @@ fun AppNavigation() {
                 startDestination = AppRoutes.SCREEN_SEARCH
             ) {
                 composable(AppRoutes.SCREEN_SEARCH) {
-                    SearchScreen()
+                    SearchScreen(onMovieClick = { movieId ->
+                        navigateToMovieDetails(navController, movieId)
+                    })
                 }
             }
             navigation(

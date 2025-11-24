@@ -13,6 +13,7 @@ fun MovieDto.toDomain(): Movie {
         title = this.title,
         releaseYear = year,
         voteAverage = if (this.voteAverage == 0.0) null else this.voteAverage,
-        posterUrl = "${BASE_IMAGE_URL}w500${this.posterPath}",
+        posterUrl = if (this.posterPath == null)
+            null else "${BASE_IMAGE_URL}w500${this.posterPath}",
     )
 }

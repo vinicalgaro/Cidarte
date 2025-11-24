@@ -47,6 +47,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.MovieDetails
+import com.vinicalgaro.cidarte.presentation.components.BrokenImage
 import com.vinicalgaro.cidarte.presentation.components.DefaultErrorComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultLoadingComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
@@ -86,7 +87,7 @@ private fun MovieDetailContent(movie: MovieDetails) {
             .fillMaxSize()
             .verticalScroll(scrollState)
     ) {
-        MovieBanner(movie)
+        if (movie.backdropUrl != null) MovieBanner(movie)
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -166,7 +167,7 @@ private fun MovieCabecalho(movie: MovieDetails) {
                 .width(100.dp)
                 .aspectRatio(2f / 3f)
         ) {
-            AsyncImage(
+            if (movie.posterUrl == null) BrokenImage() else AsyncImage(
                 model = movie.posterUrl,
                 contentDescription = movie.title,
                 contentScale = ContentScale.Crop,

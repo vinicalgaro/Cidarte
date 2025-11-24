@@ -27,8 +27,10 @@ fun MovieDetailsDto.toDomain(): MovieDetails {
         id = this.id,
         title = this.title,
         overview = this.overview,
-        posterUrl = "${BASE_IMAGE_URL}w500${this.posterPath}",
-        backdropUrl = "${BASE_IMAGE_URL}w1280${this.backdropPath}",
+        posterUrl = if (this.posterPath == null)
+            null else "${BASE_IMAGE_URL}w500${this.posterPath}",
+        backdropUrl = if (this.backdropPath == null)
+            null else "${BASE_IMAGE_URL}w1280${this.backdropPath}",
         releaseDate = formattedDate,
         voteAverage = if (this.voteAverage == 0.0) null else this.voteAverage,
         voteCount = this.voteCount,

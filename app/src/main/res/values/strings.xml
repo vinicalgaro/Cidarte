@@ -12,4 +12,8 @@
     <string name="sinopse">Sinopse</string>
     <string name="sinopse_nao_disponivel">Sinopse não disponível.</string>
     <string name="producao">Produção: %1$s</string>
+    <string name="ops_nenhum_filme_encontrado">Ops, nenhum filme encontrado…</string>
+    <string name="qual_filme_voce_quer_pesquisar">Qual filme você quer pesquisar?</string>
+    <string name="limpar_busca">Limpar busca</string>
+    <string name="descubra_algo_novo">Descubra Algo Novo</string>
 </resources>
