@@ -2,11 +2,11 @@ package com.vinicalgaro.cidarte.presentation.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.SavedSearch
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class BottomNavItem(
@@ -26,9 +26,9 @@ sealed class BottomNavItem(
         unselectedIcon = Icons.Outlined.Search
     )
 
-    object Settings : BottomNavItem(
-        route = AppRoutes.GRAPH_SETTINGS,
-        selectedIcon = Icons.Filled.Settings,
-        unselectedIcon = Icons.Outlined.Settings
+    object About : BottomNavItem(
+        route = AppRoutes.GRAPH_ABOUT,
+        selectedIcon = Icons.Filled.Info,
+        unselectedIcon = Icons.Outlined.Info
     )
 }

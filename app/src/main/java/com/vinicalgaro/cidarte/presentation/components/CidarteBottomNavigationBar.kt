@@ -23,7 +23,7 @@ fun CidarteBottomNavigationBar(navController: NavController) {
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Search,
-        BottomNavItem.Settings
+        BottomNavItem.About
     )
 
     NavigationBar(

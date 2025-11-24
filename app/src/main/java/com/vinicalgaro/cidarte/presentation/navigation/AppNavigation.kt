@@ -21,7 +21,7 @@ import com.vinicalgaro.cidarte.presentation.screens.detailedmovie.DetailedMovieS
 import com.vinicalgaro.cidarte.presentation.screens.home.HomeScreen
 import com.vinicalgaro.cidarte.presentation.screens.search.SearchScreen
 import com.vinicalgaro.cidarte.presentation.screens.sectiongrid.SectionGridScreen
-import com.vinicalgaro.cidarte.presentation.screens.settings.SettingsScreen
+import com.vinicalgaro.cidarte.presentation.screens.settings.AboutScreen
 
 @Composable
 fun AppNavigation() {
@@ -33,7 +33,7 @@ fun AppNavigation() {
     val topLevelDestinations = listOf(
         AppRoutes.GRAPH_HOME,
         AppRoutes.GRAPH_SEARCH,
-        AppRoutes.GRAPH_SETTINGS
+        AppRoutes.GRAPH_ABOUT
     )
 
     val showBottomBar = currentDestination?.hierarchy?.any { destination ->
@@ -93,11 +93,11 @@ fun AppNavigation() {
                 }
             }
             navigation(
-                route = AppRoutes.GRAPH_SETTINGS,
-                startDestination = AppRoutes.SCREEN_SETTINGS
+                route = AppRoutes.GRAPH_ABOUT,
+                startDestination = AppRoutes.SCREEN_ABOUT
             ) {
-                composable(AppRoutes.SCREEN_SETTINGS) {
-                    SettingsScreen()
+                composable(AppRoutes.SCREEN_ABOUT) {
+                    AboutScreen()
                 }
             }
             composable(
