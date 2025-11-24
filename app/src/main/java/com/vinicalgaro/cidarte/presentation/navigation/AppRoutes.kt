@@ -18,7 +18,7 @@ object AppRoutes {
     // --- TELAS DE SEARCH ---
     const val SCREEN_SEARCH = "search_screen"
 
-    // --- TELAS DE SETTINGS ---
+    // --- TELAS DE ABOUT ---
     const val SCREEN_ABOUT = "about_screen"
 
     // --- TELAS GLOBAIS ---
