@@ -58,8 +58,7 @@ fun LibraryScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            UserProfileHeader()
-
+            UserProfileHeader(memberSince = uiState.memberSince)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

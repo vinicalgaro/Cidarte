@@ -2,6 +2,7 @@ package com.vinicalgaro.cidarte.presentation.screens.library
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vinicalgaro.cidarte.data.local.UserPreferences
 import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.domain.usecase.GetFavoriteMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
@@ -21,8 +22,10 @@ import javax.inject.Inject
 class LibraryViewModel @Inject constructor(
     getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
     getWatchListMoviesUseCase: GetWatchListMoviesUseCase,
-    getPopularMoviesUseCase: GetPopularMoviesUseCase
+    getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    userPreferences: UserPreferences
 ) : ViewModel() {
+    private val memberSinceYear = userPreferences.getMemberSince()
     private val retryTrigger = MutableStateFlow(0)
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -34,7 +37,8 @@ class LibraryViewModel @Inject constructor(
                 isLoading = false,
                 favoriteMovies = favorites,
                 watchListMovies = watchlist,
-                popularMovies = popular
+                popularMovies = popular,
+                memberSince = memberSinceYear
             )
         }.catch {
             emit(LibraryUiState(hasError = true))

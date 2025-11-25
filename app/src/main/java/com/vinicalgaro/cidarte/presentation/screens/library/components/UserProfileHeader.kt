@@ -24,7 +24,7 @@ import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
 
 @Composable
-fun UserProfileHeader() {
+fun UserProfileHeader(memberSince: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -51,7 +51,7 @@ fun UserProfileHeader() {
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = stringResource(R.string.membro_desde, 2025), //ToDo: Mockado
+                text = stringResource(R.string.membro_desde, memberSince),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
