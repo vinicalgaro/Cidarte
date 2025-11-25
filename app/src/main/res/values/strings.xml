@@ -28,4 +28,7 @@
     <string name="versao_do_app">Versão do App</string>
     <string name="desenvolvido_por">Desenvolvido Por</string>
     <string name="vinicius_calgaro_linkedin">Vinicius Calgaro (LinkedIn)</string>
+    <string name="flipanimation">FlipAnimation</string>
+    <string name="fechar">Fechar</string>
+    <string name="conferir">Conferir</string>
 </resources>

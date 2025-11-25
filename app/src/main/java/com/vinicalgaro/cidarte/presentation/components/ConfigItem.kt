@@ -32,8 +32,8 @@ fun ConfigItem(
 ) {
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(
-                alpha = 0.3f
+            containerColor = MaterialTheme.colorScheme.surface.copy(
+                alpha = 0.5f
             )
         )
     ) {

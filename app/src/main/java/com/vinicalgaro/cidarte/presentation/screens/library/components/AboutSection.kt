@@ -15,7 +15,7 @@ import com.vinicalgaro.cidarte.presentation.components.ConfigItem
 
 @Composable
 fun AboutSection(onLinkedinClick: () -> Unit) {
-    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         ConfigItem(
             label = stringResource(R.string.versao_do_app),
             value = BuildConfig.VERSION_NAME,

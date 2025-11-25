@@ -2,6 +2,7 @@ package com.vinicalgaro.cidarte.presentation.screens.library
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.domain.usecase.GetFavoriteMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetWatchListMoviesUseCase
@@ -23,6 +24,7 @@ class LibraryViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LibraryUiState())
 
     val uiState = _uiState.asStateFlow()
+    private var lastPickedMovieId: Int? = null
 
     init {
         loadMovies()
@@ -54,5 +56,28 @@ class LibraryViewModel @Inject constructor(
                 _uiState.update { it.copy(isLoading = false) }
             }
         }
+    }
+
+    fun getRandomMovie(): Movie? {
+        val currentState = _uiState.value
+
+        val sourceList = if (currentState.watchListMovies.isNotEmpty()) {
+            currentState.watchListMovies
+        } else {
+            currentState.popularMovies
+        }
+
+        if (sourceList.isEmpty()) return null
+
+        val candidates = if (sourceList.size > 1 && lastPickedMovieId != null) {
+            sourceList.filter { it.id != lastPickedMovieId }
+        } else {
+            sourceList
+        }
+
+        val selectedMovie = candidates.random()
+        lastPickedMovieId = selectedMovie.id
+
+        return selectedMovie
     }
 }
