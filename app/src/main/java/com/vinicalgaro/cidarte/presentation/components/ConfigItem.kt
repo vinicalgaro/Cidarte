@@ -1,4 +1,4 @@
-package com.vinicalgaro.cidarte.presentation.screens.library.components
+package com.vinicalgaro.cidarte.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.composables.icons.lucide.ArrowUpRight
+import com.composables.icons.lucide.ArrowRight
 import com.composables.icons.lucide.Lucide
 
 @Composable
@@ -27,7 +27,8 @@ fun ConfigItem(
     value: String,
     icon: ImageVector,
     onClick: () -> Unit,
-    showArrow: Boolean = false
+    showArrow: Boolean = false,
+    arrowImageVector: ImageVector = Lucide.ArrowRight
 ) {
     Card(
         colors = CardDefaults.cardColors(
@@ -64,7 +65,7 @@ fun ConfigItem(
             }
             if (showArrow) {
                 Icon(
-                    imageVector = Lucide.ArrowUpRight,
+                    imageVector = arrowImageVector,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(16.dp)

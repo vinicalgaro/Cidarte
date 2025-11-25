@@ -45,7 +45,7 @@ fun CineRoletaCard(onClick: () -> Unit) {
                     color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
                 )
                 Text(
-                    text = stringResource(R.string.tirar_a_sorte),
+                    text = stringResource(R.string.sortear_filme),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSecondaryContainer

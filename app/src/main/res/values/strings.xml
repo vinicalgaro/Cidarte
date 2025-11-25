@@ -24,9 +24,8 @@
     <string name="membro_desde">Membro desde %1$s</string>
     <string name="cinefilo">Cinéfilo</string>
     <string name="nao_sabe_o_que_ver">Não sabe o que ver?</string>
-    <string name="tirar_a_sorte">Tirar a Sorte</string>
-    <string name="sortear_filme">Sortear filme</string>
+    <string name="sortear_filme">Sortear Filme</string>
     <string name="versao_do_app">Versão do App</string>
-    <string name="desenvolvido_por">Desenvolvido por</string>
+    <string name="desenvolvido_por">Desenvolvido Por</string>
     <string name="vinicius_calgaro_linkedin">Vinicius Calgaro (LinkedIn)</string>
 </resources>
