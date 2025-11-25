@@ -33,7 +33,7 @@ fun ConfigItem(
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(
-                alpha = 0.5f
+                alpha = 0.15f
             )
         )
     ) {
