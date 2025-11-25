@@ -9,6 +9,8 @@ interface MovieRepository {
     fun getEmCartazMovies(): Flow<List<Movie>>
     fun getTopRatedMovies(): Flow<List<Movie>>
     fun getEmBreveMovies(): Flow<List<Movie>>
+    fun getFavoriteMovies(): Flow<List<Movie>>
+    fun getWatchListMovies(): Flow<List<Movie>>
     fun getMovieDetails(movieId: Int): Flow<MovieDetails>
     fun searchMovies(query: String): Flow<List<Movie>>
 }

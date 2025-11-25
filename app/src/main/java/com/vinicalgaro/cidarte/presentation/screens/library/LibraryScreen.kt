@@ -13,6 +13,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,10 +23,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.composables.icons.lucide.Eye
 import com.composables.icons.lucide.Heart
 import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
+import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
 import com.vinicalgaro.cidarte.presentation.components.SectionHeader
 import com.vinicalgaro.cidarte.presentation.screens.library.components.AboutSection
@@ -38,13 +41,23 @@ import com.vinicalgaro.cidarte.presentation.theme.CidarteRosa
 
 @Composable
 fun LibraryScreen(
+    viewModel: LibraryViewModel = hiltViewModel(),
     onCollectionClick: (sectionType: String) -> Unit,
     onGoToMovieClick: (movieId: Int) -> Unit
 ) {
+    val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
     var showCineDialog by remember { mutableStateOf(false) }
+
+    fun getRandomMovie(): Movie {
+        val movieList =
+            if (uiState.watchListMovies.isEmpty()) uiState.popularMovies else uiState.watchListMovies
+        val randomIndex = (0 until movieList.size).random()
+
+        return movieList[randomIndex]
+    }
 
     DefaultScaffold(hideTopBar = true) {
         Column(
@@ -61,7 +74,8 @@ fun LibraryScreen(
             if (showCineDialog) {
                 CineRoletaBottomSheet (
                     onDismiss = { showCineDialog = false },
-                    onGoToMovie = { movieId -> onGoToMovieClick(movieId) }
+                    onGoToMovie = { movieId -> onGoToMovieClick(movieId) },
+                    movie = getRandomMovie()
                 )
             }
             SectionHeader(stringResource(R.string.minhas_colecoes))
@@ -71,7 +85,7 @@ fun LibraryScreen(
             ) {
                 CollectionCard(
                     title = stringResource(R.string.quero_ver),
-                    count = 0, //ToDo: Mockado
+                    count = uiState.watchListMovies.size,
                     icon = Lucide.Eye,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.weight(1f),
@@ -79,7 +93,7 @@ fun LibraryScreen(
                 )
                 CollectionCard(
                     title = stringResource(R.string.favoritos),
-                    count = 0, //ToDo: Mockado
+                    count = uiState.favoriteMovies.size,
                     icon = Lucide.Heart,
                     color = CidarteRosa,
                     modifier = Modifier.weight(1f),

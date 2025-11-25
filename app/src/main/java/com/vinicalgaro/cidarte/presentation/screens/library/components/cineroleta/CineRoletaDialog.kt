@@ -49,22 +49,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.composables.icons.lucide.Club
+import com.composables.icons.lucide.Film
 import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
+import com.vinicalgaro.cidarte.domain.model.Movie
+import com.vinicalgaro.cidarte.presentation.components.BrokenImage
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CineRoletaBottomSheet(
     onDismiss: () -> Unit,
-    onGoToMovie: (Int) -> Unit
+    onGoToMovie: (Int) -> Unit,
+    movie: Movie
 ) {
-    // DADOS MOCKADOS
-    val movieTitle = "O Poderoso Chefão"
-    val movieId = 238
-    val moviePosterUrl = "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-
     // Estado do BottomSheet
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
@@ -165,10 +163,10 @@ fun CineRoletaBottomSheet(
                                 verticalArrangement = Arrangement.Center
                             ) {
                                 Icon(
-                                    imageVector = Lucide.Club,
+                                    imageVector = Lucide.Film,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.8f), // Ajustado para Dourado
-                                    modifier = Modifier.size(48.dp)
+                                    modifier = Modifier.size(42.dp)
                                 )
                                 Text(
                                     text = "?",
@@ -188,8 +186,8 @@ fun CineRoletaBottomSheet(
                                 .fillMaxSize()
                                 .graphicsLayer { rotationY = 180f }
                         ) {
-                            AsyncImage(
-                                model = moviePosterUrl,
+                            if (movie.posterUrl == null) BrokenImage() else AsyncImage(
+                                model = movie.posterUrl,
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop,
                                 modifier = Modifier.fillMaxSize()
@@ -211,7 +209,7 @@ fun CineRoletaBottomSheet(
                                 contentAlignment = Alignment.BottomCenter
                             ) {
                                 Text(
-                                    text = movieTitle,
+                                    text = movie.title,
                                     style = MaterialTheme.typography.titleLarge,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White,
@@ -232,7 +230,7 @@ fun CineRoletaBottomSheet(
             Button(
                 onClick = {
                     onDismiss()
-                    onGoToMovie(movieId)
+                    onGoToMovie(movie.id)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

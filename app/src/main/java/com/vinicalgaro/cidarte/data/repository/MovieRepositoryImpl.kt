@@ -27,6 +27,18 @@ class MovieRepositoryImpl(
     override fun getEmBreveMovies(): Flow<List<Movie>> =
         getMoviesFromApi(apiCall = { api.getEmBreveMovies() })
 
+    override fun getFavoriteMovies(): Flow<List<Movie>> {
+        return flow {
+            emit(emptyList())
+        }
+    }
+
+    override fun getWatchListMovies(): Flow<List<Movie>> {
+        return flow {
+            emit(emptyList())
+        }
+    }
+
     override fun getMovieDetails(movieId: Int): Flow<MovieDetails> = flow {
         val movieDto = api.getMovieDetails(movieId)
         val movieDetail = movieDto.toDomain()
