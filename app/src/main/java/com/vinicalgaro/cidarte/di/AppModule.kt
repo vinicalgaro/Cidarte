@@ -1,6 +1,7 @@
 package com.vinicalgaro.cidarte.di
 
 import com.vinicalgaro.cidarte.BuildConfig
+import com.vinicalgaro.cidarte.data.local.dao.MovieDao
 import com.vinicalgaro.cidarte.data.remote.api.TmdbApi
 import com.vinicalgaro.cidarte.data.repository.MovieRepositoryImpl
 import com.vinicalgaro.cidarte.domain.repository.MovieRepository
@@ -66,5 +67,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMovieRepository(api: TmdbApi): MovieRepository = MovieRepositoryImpl(api)
+    fun provideMovieRepository(api: TmdbApi, dao: MovieDao): MovieRepository =
+        MovieRepositoryImpl(api, dao)
 }

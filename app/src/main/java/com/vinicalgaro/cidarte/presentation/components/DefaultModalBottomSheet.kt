@@ -33,7 +33,7 @@ fun DefaultModalBottomSheet(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         dragHandle = null
     ) {
         Column(

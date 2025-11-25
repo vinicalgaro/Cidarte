@@ -1,6 +1,7 @@
 package com.vinicalgaro.cidarte.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,6 +27,7 @@ fun DefaultScaffold(
     title: String? = null,
     onNavigateBack: (() -> Unit)? = null,
     hideTopBar: Boolean = false,
+    actions: @Composable RowScope.() -> Unit = {},
     content: @Composable () -> Unit
 ) {
     val isHome = title == null
@@ -34,37 +36,38 @@ fun DefaultScaffold(
         modifier = modifier,
         topBar = {
             if (!hideTopBar)
-            CenterAlignedTopAppBar(
-                title = {
-                    val defaultStyle = MaterialTheme.typography.titleLarge
+                CenterAlignedTopAppBar(
+                    actions = actions,
+                    title = {
+                        val defaultStyle = MaterialTheme.typography.titleLarge
 
-                    Text(
-                        text = if (isHome) stringResource(id = R.string.app_name) else title,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = if (isHome) {
-                            defaultStyle.copy(
-                                fontFamily = BebasNeue,
-                                fontSize = 32.sp
-                            )
-                        } else {
-                            defaultStyle.copy(
-                                fontSize = 24.sp
-                            )
-                        }
-                    )
-                },
-                navigationIcon = {
-                    onNavigateBack?.let { callback ->
-                        IconButton(onClick = callback) {
-                            Icon(
-                                imageVector = Lucide.ChevronLeft,
-                                contentDescription = stringResource(R.string.voltar)
-                            )
+                        Text(
+                            text = if (isHome) stringResource(id = R.string.app_name) else title,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            style = if (isHome) {
+                                defaultStyle.copy(
+                                    fontFamily = BebasNeue,
+                                    fontSize = 32.sp
+                                )
+                            } else {
+                                defaultStyle.copy(
+                                    fontSize = 24.sp
+                                )
+                            }
+                        )
+                    },
+                    navigationIcon = {
+                        onNavigateBack?.let { callback ->
+                            IconButton(onClick = callback) {
+                                Icon(
+                                    imageVector = Lucide.ChevronLeft,
+                                    contentDescription = stringResource(R.string.voltar)
+                                )
+                            }
                         }
                     }
-                }
-            )
+                )
         }
     ) { innerPadding ->
         Box(modifier = Modifier.padding(innerPadding)) {

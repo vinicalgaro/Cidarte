@@ -8,14 +8,15 @@ import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.domain.usecase.GetEmBreveMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetEmCartazMoviesUseCase
+import com.vinicalgaro.cidarte.domain.usecase.GetFavoriteMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetTopRatedMoviesUseCase
+import com.vinicalgaro.cidarte.domain.usecase.GetWatchListMoviesUseCase
 import com.vinicalgaro.cidarte.presentation.navigation.AppRoutes
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,6 +27,8 @@ class SectionGridViewModel @Inject constructor(
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getEmCartazMoviesUseCase: GetEmCartazMoviesUseCase,
     private val getEmBreveMoviesUseCase: GetEmBreveMoviesUseCase,
+    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    private val getWatchListMoviesUseCase: GetWatchListMoviesUseCase,
     savedStateHandle: SavedStateHandle,
     private val application: Application
 ) : ViewModel() {
@@ -36,57 +39,59 @@ class SectionGridViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        loadSectionMovies()
+        observeSectionMovies()
     }
 
-    private fun getMoviesBySectionType(sectionType: String?): Pair<Flow<List<Movie>>, Int>? {
-        try {
-            val titleResId = when (sectionType) {
-                SectionType.POPULAR -> R.string.section_populares
-                SectionType.TOP_RATED -> R.string.section_mais_votados
-                SectionType.NOW_PLAYING -> R.string.section_em_cartaz
-                SectionType.UPCOMING -> R.string.section_em_breve
-                else -> throw Exception()
-            }
+    fun observeSectionMovies() {
+        val sectionType = _sectionType ?: return
 
-            val useCase = when (sectionType) {
-                SectionType.POPULAR -> getPopularMoviesUseCase()
-                SectionType.TOP_RATED -> getTopRatedMoviesUseCase()
-                SectionType.NOW_PLAYING -> getEmCartazMoviesUseCase()
-                SectionType.UPCOMING -> getEmBreveMoviesUseCase()
-                else -> throw Exception()
-            }
-
-            return Pair(useCase, titleResId)
-        } catch (_: Exception) {
-            return null
-        }
-    }
-
-    fun loadSectionMovies() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, hasError = false) }
 
-            val pair: Pair<Flow<List<Movie>>, Int>? = getMoviesBySectionType(_sectionType)
+            val (flow, titleResId) = getFlowAndTitle(sectionType)
 
-            if (pair != null) {
-                val (useCase, titleResId) = pair
-
+            if (flow != null && titleResId != null) {
                 val titleString = application.getString(titleResId)
                 _uiState.update { it.copy(sectionTitle = titleString) }
-
                 try {
-                    val movies = useCase.first()
-
-                    _uiState.update { it.copy(movies = movies) }
+                    flow.collect { movies ->
+                        _uiState.update {
+                            it.copy(
+                                movies = movies,
+                                isLoading = false
+                            )
+                        }
+                    }
                 } catch (_: Exception) {
-                    _uiState.update { it.copy(hasError = true) }
-                } finally {
-                    _uiState.update { it.copy(isLoading = false) }
+                    _uiState.update { it.copy(hasError = true, isLoading = false) }
                 }
             } else {
                 _uiState.update { it.copy(hasError = true, isLoading = false) }
             }
+        }
+    }
+
+    private fun getFlowAndTitle(type: String): Pair<Flow<List<Movie>>?, Int?> {
+        return try {
+            when (type) {
+                SectionType.POPULAR -> Pair(getPopularMoviesUseCase(), R.string.section_populares)
+                SectionType.TOP_RATED -> Pair(
+                    getTopRatedMoviesUseCase(),
+                    R.string.section_mais_votados
+                )
+
+                SectionType.NOW_PLAYING -> Pair(
+                    getEmCartazMoviesUseCase(),
+                    R.string.section_em_cartaz
+                )
+
+                SectionType.UPCOMING -> Pair(getEmBreveMoviesUseCase(), R.string.section_em_breve)
+                SectionType.FAVORITES -> Pair(getFavoriteMoviesUseCase(), R.string.favoritos)
+                SectionType.WATCHLIST -> Pair(getWatchListMoviesUseCase(), R.string.quero_ver)
+                else -> Pair(null, null)
+            }
+        } catch (_: Exception) {
+            Pair(null, null)
         }
     }
 }

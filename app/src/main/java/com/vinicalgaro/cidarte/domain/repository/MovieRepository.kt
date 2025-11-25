@@ -13,4 +13,9 @@ interface MovieRepository {
     fun getWatchListMovies(): Flow<List<Movie>>
     fun getMovieDetails(movieId: Int): Flow<MovieDetails>
     fun searchMovies(query: String): Flow<List<Movie>>
+    suspend fun toggleFavorite(movie: Movie)
+    suspend fun toggleWatchlist(movie: Movie)
+    fun checkMovieStatus(movieId: Int): Flow<MovieStatus>
 }
+
+data class MovieStatus(val isFavorite: Boolean, val isInWatchlist: Boolean)

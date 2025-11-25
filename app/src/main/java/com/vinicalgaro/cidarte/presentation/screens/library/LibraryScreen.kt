@@ -68,7 +68,7 @@ fun LibraryScreen(
                 when {
                     uiState.isLoading -> DefaultLoadingComponent()
 
-                    uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::loadMovies)
+                    uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::onRetry)
 
                     else -> Column(
                         modifier = Modifier

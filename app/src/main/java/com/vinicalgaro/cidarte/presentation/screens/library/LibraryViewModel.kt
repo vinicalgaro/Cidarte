@@ -7,59 +7,47 @@ import com.vinicalgaro.cidarte.domain.usecase.GetFavoriteMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetPopularMoviesUseCase
 import com.vinicalgaro.cidarte.domain.usecase.GetWatchListMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class LibraryViewModel @Inject constructor(
-    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
-    private val getWatchListMoviesUseCase: GetWatchListMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    getWatchListMoviesUseCase: GetWatchListMoviesUseCase,
+    getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(LibraryUiState())
+    private val retryTrigger = MutableStateFlow(0)
 
-    val uiState = _uiState.asStateFlow()
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val uiState: StateFlow<LibraryUiState> = retryTrigger.flatMapLatest {
+        combine(
+            getFavoriteMoviesUseCase(), getWatchListMoviesUseCase(), getPopularMoviesUseCase()
+        ) { favorites, watchlist, popular ->
+            LibraryUiState(
+                isLoading = false,
+                favoriteMovies = favorites,
+                watchListMovies = watchlist,
+                popularMovies = popular
+            )
+        }.catch {
+            emit(LibraryUiState(hasError = true))
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = LibraryUiState(isLoading = true)
+    )
     private var lastPickedMovieId: Int? = null
 
-    init {
-        loadMovies()
-    }
-
-    fun loadMovies() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, hasError = false) }
-
-            try {
-                val favoriteMoviesDeferred = async { getFavoriteMoviesUseCase() }
-                val watchListMoviesDeferred = async { getWatchListMoviesUseCase() }
-                val popularMoviesDeferred = async { getPopularMoviesUseCase() }
-
-                val favoriteMovies = favoriteMoviesDeferred.await()
-                val watchListMovies = watchListMoviesDeferred.await()
-                val popularMovies = popularMoviesDeferred.await()
-
-                _uiState.update {
-                    it.copy(
-                        favoriteMovies = favoriteMovies.first(),
-                        watchListMovies = watchListMovies.first(),
-                        popularMovies = popularMovies.first()
-                    )
-                }
-            } catch (_: Exception) {
-                _uiState.update { it.copy(hasError = true) }
-            } finally {
-                _uiState.update { it.copy(isLoading = false) }
-            }
-        }
-    }
-
     fun getRandomMovie(): Movie? {
-        val currentState = _uiState.value
+        val currentState = uiState.value
 
         val sourceList = if (currentState.watchListMovies.isNotEmpty()) {
             currentState.watchListMovies
@@ -79,5 +67,9 @@ class LibraryViewModel @Inject constructor(
         lastPickedMovieId = selectedMovie.id
 
         return selectedMovie
+    }
+
+    fun onRetry() {
+        retryTrigger.value += 1
     }
 }

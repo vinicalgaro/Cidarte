@@ -31,4 +31,5 @@
     <string name="flipanimation">FlipAnimation</string>
     <string name="fechar">Fechar</string>
     <string name="conferir">Conferir</string>
+    <string name="no_film">Parece que não temos filmes aqui.</string>
 </resources>

@@ -10,8 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.Movie
 import com.vinicalgaro.cidarte.presentation.components.DefaultErrorComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultLoadingComponent
@@ -33,7 +35,7 @@ fun SectionGridScreen(
         when {
             uiState.isLoading -> DefaultLoadingComponent()
 
-            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::loadSectionMovies)
+            uiState.hasError -> DefaultErrorComponent(onRetry = viewModel::observeSectionMovies)
 
             else -> SectionGridContent(uiState.movies, onMovieClick)
         }
@@ -42,15 +44,19 @@ fun SectionGridScreen(
 
 @Composable
 private fun SectionGridContent(movies: List<Movie>, onMovieClick: (movieId: Int) -> Unit) {
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(3),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
-        modifier = Modifier.fillMaxSize()
-    ) {
-        items(movies) { m ->
-            MovieItem(movie = m, 120.dp, onlyImage = true, onClick = { onMovieClick(m.id) })
+    if (movies.isEmpty()) {
+        return DefaultErrorComponent(text = stringResource(R.string.no_film))
+    } else {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(3),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(movies) { m ->
+                MovieItem(movie = m, 120.dp, onlyImage = true, onClick = { onMovieClick(m.id) })
+            }
         }
     }
 }

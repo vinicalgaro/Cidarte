@@ -21,12 +21,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,6 +48,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.composables.icons.lucide.Eye
+import com.composables.icons.lucide.EyeOff
+import com.composables.icons.lucide.Lucide
 import com.vinicalgaro.cidarte.R
 import com.vinicalgaro.cidarte.domain.model.MovieDetails
 import com.vinicalgaro.cidarte.presentation.components.BrokenImage
@@ -52,6 +58,7 @@ import com.vinicalgaro.cidarte.presentation.components.DefaultErrorComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultLoadingComponent
 import com.vinicalgaro.cidarte.presentation.components.DefaultScaffold
 import com.vinicalgaro.cidarte.presentation.theme.CidarteDourado
+import com.vinicalgaro.cidarte.presentation.theme.CidarteVerde
 import java.util.Locale
 
 @Composable
@@ -65,7 +72,12 @@ fun DetailedMovieScreen(
 
     DefaultScaffold(
         title = appBarTitle,
-        onNavigateBack = onNavigateBack
+        onNavigateBack = onNavigateBack,
+        actions = {
+            if (uiState.movie != null) {
+                DetailedMovieActions(viewModel, uiState)
+            }
+        }
     ) {
         when {
             uiState.isLoading -> DefaultLoadingComponent()
@@ -74,6 +86,31 @@ fun DetailedMovieScreen(
 
             uiState.movie != null -> MovieDetailContent(movie = uiState.movie!!)
         }
+    }
+}
+
+@Composable
+private fun DetailedMovieActions(
+    viewModel: DetailedMovieViewModel,
+    uiState: DetailedMovieUiState
+) {
+    IconButton(onClick = viewModel::onToggleWatchlist) {
+        Icon(
+            imageVector = if (uiState.isInWatchlist)
+                Lucide.Eye else Lucide.EyeOff,
+            contentDescription = null,
+            tint = if (uiState.isInWatchlist)
+                CidarteVerde else MaterialTheme.colorScheme.onSurface
+        )
+    }
+    IconButton(onClick = viewModel::onToggleFavorite) {
+        Icon(
+            imageVector = if (uiState.isFavorite)
+                Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+            contentDescription = null,
+            tint = if (uiState.isFavorite)
+                Color.Red else MaterialTheme.colorScheme.onSurface
+        )
     }
 }
 
